@@ -78,7 +78,7 @@ exitRoom(){
 
     this.props.socket.on('get connections', (conns) => {
       console.log('getting coonections');
-      if(conns !== this.props.app.connections){
+      if(!arraysEqual(conns, this.props.app.connections)){
           this.props.setAppState({connections:conns})
       }
     });
@@ -99,7 +99,7 @@ exitRoom(){
         {showSearch ?  <div className="closeIcon" onClick={() => {setAppState({showSearch:false}); this.setState({search:""})}}><FontAwesome icon="times" /></div>
         : <div className="leaveIcon" onClick={() =>  this.exitRoom()}><FontAwesome icon="arrow-left" /> <span className="roomTitle">{this.props.app.room}</span> </div>
         }
-        <div className="peopleIcon"><FontAwesome icon="users" /> {connections}</div>
+        <div className="peopleIcon"><FontAwesome icon="users" /> {connections.length}</div>
         <input
           type="text"
           value={search}
