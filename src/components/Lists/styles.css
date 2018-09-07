@@ -1,0 +1,38 @@
+.songList {
+  padding-top:15px;
+  position:absolute;
+  top:60px;
+  background: transparent;
+  width:100%;
+}
+
+
+.songItem {
+  cursor: pointer;
+  background: rgba(132,132,132,0.22);
+  font-size: 20px;
+  transition: 0.2s;
+  margin:10px;
+  min-height: 80px;
+  padding:10px;
+  border-bottom:3px solid green;
+}
+
+.songTitle {
+
+}
+
+.songImage {
+  float:left;
+  width:100px;
+  height:60px;
+  margin-right:10px;
+}
+
+.songItem:nth-child(odd) {
+    background: rgba(132,132,132,0.27);
+}
+
+.songItem:hover {
+    background: rgba(132,132,132,0.35);
+}

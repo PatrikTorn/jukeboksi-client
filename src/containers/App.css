@@ -1,0 +1,44 @@
+html {
+  height: 100%;
+}
+
+body {
+background-color: #403f3f;
+background: linear-gradient(0deg, #202020, #403f3f);
+width:100vw;
+height:100vh;
+background-attachment: fixed;
+}
+
+.App {
+  width:100vw;
+  height:100vh;
+  margin:0px;
+  padding:0px;
+  color:white;
+  background-color: #403f3f;
+  background: linear-gradient(0deg, #202020, #403f3f);
+  background-attachment: fixed;
+}
+
+.listContainer {
+  background: linear-gradient(0deg, #202020, #403f3f);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.songList {
+  padding-top:15px;
+  position:absolute;
+  top:60px;
+  background: transparent;
+  width:100%;
+}
+
+.songListContainer {
+  padding-top:15px;
+  position:absolute;
+  top:60px;
+  background: transparent;
+  width:100%;
+}
