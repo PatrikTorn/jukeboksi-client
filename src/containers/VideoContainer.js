@@ -32,16 +32,18 @@ setVolume(volume){
 
   render() {
     //this.setState({playVideo:e.data == 2 ? false : true});
-    const {playlist} = this.props.app;
+    const {playlist, connections} = this.props.app;
 
     return (
       <div className="videoPlayerContainer">
+        <div className="roomTitle">
+        </div>
         <YouTube
           className="videoPlayer"
           videoId={playlist[0].id}
           opts={{playerVars: {autoplay: 1, controls:0, showinfo:0}}}
           onEnd={() => this.props.onEnd(playlist[0].id)}
-          onReady={e => {e.target.playVideo(); this.youtube = e.target;}}
+          onReady={e => {e.target.playVideo(); this.setState({volume:e.target.getVolume()}); this.youtube = e.target;}}
           onStateChange={e => {(e.data === 2 || e.data === 3) && this.youtube.playVideo()}}
         />
         <div className="musicButtons">

@@ -68,7 +68,7 @@
     height:100%;
     text-align: center;
     top:60px;
-    left:10px;
+    left:0px;
     background:#303030;
   }
   .cont {
@@ -102,7 +102,7 @@
 
 
   .roomTitle {
-    max-width: 50px;
+    max-width: 200px;
     font-size: 20px;
     color:white;
     white-space: nowrap;

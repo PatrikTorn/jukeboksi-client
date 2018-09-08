@@ -60,8 +60,8 @@ searchSong(name){
 }
 
 exitRoom(){
-   this.props.socket.emit('exit room', this.props.app.room)
    localStorage.removeItem('room');
+   this.props.socket.emit('exit room', this.props.app.room)
    this.props.setAppState({room:null, playlist:[]});
 }
 
@@ -77,8 +77,7 @@ exitRoom(){
     });
 
     this.props.socket.on('get connections', (conns) => {
-      console.log('getting coonections');
-      if(!arraysEqual(conns, this.props.app.connections)){
+      if(conns.length !== this.props.app.connections.length){
           this.props.setAppState({connections:conns})
       }
     });

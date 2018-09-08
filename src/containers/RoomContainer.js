@@ -6,7 +6,6 @@ import './RoomContainer.css';
 import './App.css';
 class RoomContainer extends Component {
   componentDidMount(){
-    // this.props.socket.emit('get rooms');
     let room = localStorage.getItem('room');
     this.props.app.rooms.map(r => {
       if(room === r.room){
@@ -39,20 +38,46 @@ class RoomContainer extends Component {
   }
 
   render() {
+
+    this.props.socket.on('get room connections', (room, connections) => {
+      console.log('get room connections');
+      console.log(room);
+      console.log(connections);
+      const index = this.props.app.rooms.findIndex(r => r.room === room);
+      if(index !== -1 && this.props.app.rooms[index].connections.length !== connections.length){
+        this.props.setAppState({rooms:this.props.app.rooms.map(r => r.room === room ? {...r, connections} : r)});
+      }
+    });
+
+    this.props.socket.on('get room playlist', (room, playlist) => {
+      console.log('get room playlist');
+      console.log(room);
+      console.log(playlist);
+      const index = this.props.app.rooms.findIndex(r => r.room === room);
+      if(index !== -1 && this.props.app.rooms[index].playlist.length !== playlist.length){
+        this.props.setAppState({rooms:this.props.app.rooms.map(r => r.room === room ? {...r, playlist} : r)});
+      }
+    });
+
     this.props.socket.on('get rooms', (rooms) => {
       console.log(rooms);
       console.log('getting rooms', rooms);
-      let room = localStorage.getItem('room');
-      // const arr1 = this.props.app.rooms.map(r => r.connections);
-      // const arr2 = rooms.map(r => r.connections);
-      // if(arraysEqual(rooms.map(r => r.room), this.props.app.rooms.map(r => r.room))) {
-      rooms.map(r => {
-        if(room === r.room){
-          this.joinRoom(room);
-          localStorage.setItem('room', room);
-        }
-      });
-      this.props.setAppState({rooms});
+      if(!this.props.app.room){
+        let room = localStorage.getItem('room');
+        rooms.map(r => {
+          if(room === r.room){
+            this.joinRoom(room);
+            localStorage.setItem('room', room);
+          }
+        });
+      }
+
+      const roomsEquals = rooms.length === this.props.app.rooms.length;
+      if(!arraysEqual(rooms.map(r => r.room), this.props.app.rooms.map(r => r.room))) {
+        // const connectionsEquals = rooms.map(r => r.connections.length !== this.props.app.rooms.find(ro => ro.room === r.room).connections.length).has(true);
+        // if(!connectionsEquals)
+          this.props.setAppState({rooms});
+      }
       // }
     });
 
