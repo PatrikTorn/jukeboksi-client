@@ -9,6 +9,11 @@ import RoomContainer from './RoomContainer';
 import VideoContainer from './VideoContainer';
 
 class PlaylistContainer extends Component {
+  constructor(props){
+    super(props);
+    this.props.socket.on('get playlist', (list) => this.getPlaylist(list))
+    this.props.socket.on('get connections', (conns) => this.getConnections(conns))
+  }
   state = {
     search:null
   }
@@ -65,31 +70,22 @@ exitRoom(){
    this.props.setAppState({room:null, playlist:[]});
 }
 
+getPlaylist(list){
+  console.log('getting playlist', {arr1, arr2});
+  const arr1 = list.map(pl => pl.id);
+  const arr2 = this.props.app.playlist.map(pl => pl.id);
+  if(!arraysEqual(arr1, arr2)){
+    this.props.updatePlaylist(list);
+  }
+}
+
+getConnections(conns){
+  if(conns.length !== this.props.app.connections.length){
+      this.props.setAppState({connections:conns})
+  }
+}
 
   render() {
-    this.props.socket.on('get playlist', (list) => {
-      const arr1 = list.map(pl => pl.id);
-      const arr2 = this.props.app.playlist.map(pl => pl.id);
-      console.log('getting playlist', {arr1, arr2});
-      if(!arraysEqual(arr1, arr2)){
-        this.props.updatePlaylist(list);
-      }
-    });
-
-    this.props.socket.on('get connections', (conns) => {
-      if(conns.length !== this.props.app.connections.length){
-          this.props.setAppState({connections:conns})
-      }
-    });
-
-    // this.props.socket.on('exit room', () => {
-    //   console.log('exiting room');
-    //   if(this.props.app.room !== null){
-    //       localStorage.removeItem('room');
-    //       this.props.setAppState({room:null});
-    //   }
-    // });
-
     const {connections, playlist, song, showSearch, rooms} = this.props.app;
     const {setAppState} = this.props;
     const {search} = this.state;
