@@ -2,9 +2,9 @@ import React from 'react';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import './styles.css';
 
-export const SortableList = SortableContainer(({songs, onDelete, searchRelatedVideos}) => {
+export const SortableList = SortableContainer(({songs, onDelete, searchRelatedVideos, pushBottom}) => {
   return (
-    <div className="songListContainer">
+    <div className={pushBottom ? "songListContainerBottom" : "songListContainer"}>
       {(songs || []).map((song, index) =>
         <SortableItem key={`item-${index}`} index={index} i={index} song={song} onDelete={onDelete} searchRelatedVideos={searchRelatedVideos}/>
       )}

@@ -11,7 +11,8 @@ import {VolumeSlider, FontAwesome} from '../components';
 class VideoContainer extends Component {
   state = {
     playVideo:true,
-    volume:50
+    volume:50,
+    fullScreen:false
   }
 
 toggleMusic(){
@@ -26,37 +27,37 @@ toggleMusic(){
 }
 
 setVolume(volume){
-  this.youtube.setVolume(Math.floor(volume));
-  this.setState({volume});
+  const vol = Math.floor(volume);
+  this.youtube.setVolume(vol);
+  this.props.setVolume(vol);
 }
 
   render() {
     //this.setState({playVideo:e.data == 2 ? false : true});
     const {playlist, connections} = this.props.app;
+    const {fullScreen, volume} = this.props.video;
 
     return (
-      <div className="videoPlayerContainer">
+      <div className={fullScreen ? "videoPlayerFullScreen" : "videoPlayerContainer"}>
         <div className="roomTitle">
         </div>
         <YouTube
-          className="videoPlayer"
+          className={fullScreen ? "videoPlayerFullScreen" : "videoPlayer"}
           videoId={playlist[0].id}
           opts={{playerVars: {autoplay: 1, controls:0, showinfo:0}}}
-          onEnd={() => this.props.onEnd(playlist[0].id)}
-          onReady={e => {e.target.playVideo(); this.setState({volume:e.target.getVolume()}); this.youtube = e.target;}}
+          onEnd={() => this.props.deleteSong(playlist[0].id)}
+          onReady={e => {e.target.playVideo(); this.props.setVolume(e.target.getVolume()); this.youtube = e.target;}}
           onStateChange={e => {(e.data === 2 || e.data === 3) && this.youtube.playVideo()}}
         />
         <div className="musicButtons">
-          {this.state.playVideo
-            ? <span className="playButton" onClick={() => this.toggleMusic()}><FontAwesome icon="pause" /></span>
-            : <span className="playButton"  onClick={() => this.toggleMusic()}><FontAwesome icon="play" /></span>
-          }
-            <div className="forwardButton"  onClick={() => this.props.onEnd(playlist[0].id)}><FontAwesome icon="forward" /></div>
+            <div className="playButton"  onClick={() => this.props.toggleFullScreen()}><FontAwesome icon="expand" /></div>
+            <div className="forwardButton"  onClick={() => this.props.deleteSong(playlist[0].id)}><FontAwesome icon="forward" /></div>
+
         </div>
 
         <div className="volumeButton">
           <VolumeSlider
-            value={this.state.volume}
+            value={volume}
             onChange={volume => this.setVolume(volume)}
           />
         </div>

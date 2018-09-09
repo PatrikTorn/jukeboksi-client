@@ -42,3 +42,11 @@ background-attachment: fixed;
   background: transparent;
   width:100%;
 }
+
+.songListContainerBottom {
+  padding-top:52vh;
+  position:absolute;
+  top:60px;
+  background: transparent;
+  width:100%;
+}
