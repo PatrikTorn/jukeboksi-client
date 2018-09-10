@@ -50,3 +50,9 @@ background-attachment: fixed;
   background: transparent;
   width:100%;
 }
+
+@media only screen and (max-width: 600px) {
+  .songListContainer {
+    padding-bottom:130px;
+  }
+}

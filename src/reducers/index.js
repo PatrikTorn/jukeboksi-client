@@ -13,5 +13,4 @@ const rootReducer = combineReducers({
     video: videoReducer,
     socket: () => socket
 });
-
 export default rootReducer;

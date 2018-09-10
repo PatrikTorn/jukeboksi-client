@@ -47,7 +47,7 @@ setVolume(volume){
           opts={{playerVars: {autoplay: 1, controls:0, showinfo:0}}}
           onEnd={() => this.props.deleteSong(playlist[0].id)}
           onReady={e => {e.target.playVideo(); this.props.setVolume(e.target.getVolume()); this.youtube = e.target;}}
-          onStateChange={e => {(e.data === 2 || e.data === 3) && this.youtube.playVideo()}}
+          onStateChange={e => {(e.data === 2 || e.data === 3 || e.data === 0) && this.youtube.playVideo(); console.warn(e)}}
         />
         <div className="musicButtons">
             <div className="playButton"  onClick={() => this.props.toggleFullScreen()}><FontAwesome icon="expand" /></div>
